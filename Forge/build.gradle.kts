@@ -15,7 +15,7 @@ buildscript {
 	}
 	
 	dependencies {
-		classpath(group = "net.minecraftforge.gradle", name = "ForgeGradle", version = "[6.0,6.2)")
+		classpath(group = "net.minecraftforge.gradle", name = "ForgeGradle", version = "5.1.+") { isChanging = true }
 		classpath(group = "org.spongepowered", name = "mixingradle", version = "0.7-SNAPSHOT")
 	}
 }
@@ -41,7 +41,7 @@ dependencies {
 configure<UserDevExtension> {
 	mappings("official", minecraftVersion)
 	
-	copyIdeResources.set(true)
+	// copyIdeResources.set(true)
 	
 	runs {
 		create("client") {
