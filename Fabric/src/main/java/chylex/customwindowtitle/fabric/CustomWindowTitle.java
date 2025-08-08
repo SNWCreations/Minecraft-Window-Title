@@ -22,5 +22,8 @@ public class CustomWindowTitle implements ClientModInitializer {
 	
 	private void updateTitle() {
 		Minecraft.getInstance().getWindow().setTitle(TitleParser.parse(config.getTitle()));
+		if (config.hasIcon()) {
+			chylex.customwindowtitle.IconChanger.setIcon(config.getIcon());
+		}
 	}
 }

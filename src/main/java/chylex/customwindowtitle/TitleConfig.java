@@ -14,11 +14,14 @@ import java.util.stream.Collectors;
 public final class TitleConfig {
 	private static final ImmutableMap<String, String> DEFAULTS = ImmutableMap.<String, String>builder()
 		.put("title", "Minecraft {mcversion}")
+		.put("icon", "")
 		.build();
-	
+
 	private static final ImmutableSet<String> IGNORED_KEYS = ImmutableSet.of(
+	/*
 		"icon16",
 		"icon32"
+	*/
 	);
 	
 	public static TitleConfig read(final String folder) {
@@ -43,7 +46,7 @@ public final class TitleConfig {
 					if (config.containsKey(key)) {
 						config.put(key, value);
 					}
-					else if (!IGNORED_KEYS.contains(key)) {
+					else if (true/*!IGNORED_KEYS.contains(key)*/) {
 						throw new RuntimeException("CustomWindowTitle configuration has an invalid key: " + key);
 					}
 				});
@@ -51,8 +54,15 @@ public final class TitleConfig {
 		} catch (final IOException e) {
 			throw new RuntimeException("CustomWindowTitle configuration error", e);
 		}
-		
-		return new TitleConfig(config.get("title"));
+
+		final String icon = config.get("icon");
+
+		final Path pathIcon = icon.isEmpty() ? null : Paths.get(folder, icon);
+		if (pathIcon != null && Files.notExists(pathIcon)){
+			throw new RuntimeException("CustomWindowTitle icon not found: " + pathIcon);
+		}
+
+		return new TitleConfig(config.get("title"), pathIcon);
 	}
 	
 	private static String parseTrimmedValue(String value) {
@@ -73,14 +83,24 @@ public final class TitleConfig {
 		
 		return value;
 	}
-	
+
 	private final String title;
-	
-	private TitleConfig(final String title) {
+	private final Path icon;
+
+	private TitleConfig(final String title, final Path icon) {
 		this.title = title;
+		this.icon = icon;
 	}
-	
+
 	public String getTitle() {
 		return title;
+	}
+
+	public boolean hasIcon() {
+		return icon != null;
+	}
+
+	public Path getIcon() {
+		return icon;
 	}
 }
