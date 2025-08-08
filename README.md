@@ -31,19 +31,16 @@ If any of the tokens aren't working, search the game log for **CustomWindowTitle
 
 ### Changing the Icon
 
-You must create two PNG images with sizes 16x16 and 32x32 pixels. The images **must be saved with transparency** even if they don't use it, **otherwise the icons will appear corrupted**. In Krita for example, you must check _Store alpha channel (transparency)_ when saving the image.
+Create a square PNG image whose dimensions are a power of two, such as 32x32 or 48x48. Put the PNG file into the .minecraft/config folder, either directly or into a subfolder.
 
-The _icon16_ and _icon32_ configuration entries point to the PNG files relative to the **.minecraft/config** folder. For example, if you place the two icons in a folder named _customwindowtitle_ as follows:
+The icon **must be saved with transparency** even if it doesn't use it, otherwise the icon may be corrupted or not appear at all. In Krita, for example, you must check Store alpha channel (transparency) when saving.
 
-* `.minecraft/config/customwindowtitle-client.toml`
-* `.minecraft/config/customwindowtitle/icon16.png`
-* `.minecraft/config/customwindowtitle/icon32.png`
+The icon configuration entry points to the PNG file relative to .minecraft/config.
 
-Then, the two icon entries should look like this:
+For example, if you placed the icon into .minecraft/config/customwindowtitle/icon.png, then the configuration entry should look like this:
 
-```toml
-icon16 = 'customwindowtitle/icon16.png'  
-icon32 = 'customwindowtitle/icon32.png'
+```properties
+icon = 'customwindowtitle/icon.png'
 ```
 
 ## Screenshots
